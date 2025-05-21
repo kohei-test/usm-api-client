@@ -23,31 +23,27 @@ async function login() {
 
     // ✅ ログイン成功後にデバイス一覧を取得
     if (result.jwt) {
-  try {
-    const deviceResponse = await fetch(`https://${ip}/api/urdevices?limit=10&offset=0&organizationID=1&applicationID=0`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${result.jwt}`,
-        "Content-Type": "application/json"
+      try {
+        const deviceResponse = await fetch(`https://${ip}/api/urdevices?limit=10&offset=0&organizationID=1&applicationID=0`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${result.jwt}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!deviceResponse.ok) {
+          throw new Error(`HTTPエラー: ${deviceResponse.status}`);
+        }
+
+        const deviceData = await deviceResponse.json();
+        document.getElementById("output").textContent += "\n\n" + JSON.stringify(deviceData, null, 2);
+      } catch (err) {
+        document.getElementById("output").textContent += `\n\nデバイス取得エラー: ${err.message}`;
       }
-    });
-
-    if (!deviceResponse.ok) {
-      throw new Error(`HTTPエラー: ${deviceResponse.status}`);
-    }
-
-    const deviceData = await deviceResponse.json();
-    document.getElementById("output").textContent += "\n\n" + JSON.stringify(deviceData, null, 2);
-  } catch (err) {
-    document.getElementById("output").textContent += `\n\nデバイス取得エラー: ${err.message}`;
-  }
-}
-
-      const deviceData = await deviceResponse.json();
-      document.getElementById("output").textContent += "\n\n" + JSON.stringify(deviceData, null, 2);
     }
 
   } catch (error) {
-    document.getElementById("output").textContent = "エラー: " + error;
+    document.getElementById("output").textContent = "ログインエラー: " + error.message;
   }
 }

@@ -18,6 +18,10 @@ async function login() {
       body: JSON.stringify(data)
     });
 
+    if (!response.ok) {
+      throw new Error(`ログインAPIエラー: HTTP ${response.status}`);
+    }
+
     const result = await response.json();
     document.getElementById("output").textContent = JSON.stringify(result, null, 2);
 
@@ -32,7 +36,7 @@ async function login() {
         });
 
         if (!deviceResponse.ok) {
-          throw new Error(`HTTPエラー: ${deviceResponse.status}`);
+          throw new Error(`デバイス取得エラー: HTTP ${deviceResponse.status}`);
         }
 
         const deviceData = await deviceResponse.json();

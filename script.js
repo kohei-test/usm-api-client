@@ -36,10 +36,12 @@ async function login() {
         }
 
         const deviceData = await deviceResponse.json();
-        document.getElementById("output").textContent += "\n\n" + JSON.stringify(deviceData, null, 2);
+        document.getElementById("output").textContent += `\n\n` + JSON.stringify(deviceData, null, 2);
       } catch (err) {
         document.getElementById("output").textContent += `\n\nデバイス取得エラー: ${err.message}`;
       }
+    } else {
+      throw new Error("JWTが取得できませんでした");
     }
 
   } catch (error) {

@@ -15,6 +15,7 @@ async function login() {
       headers: {
         "Content-Type": "application/json"
       },
+      credentials: "include", // ← クッキー送信のために追加
       body: JSON.stringify(data)
     });
 
@@ -25,28 +26,21 @@ async function login() {
     const result = await response.json();
     document.getElementById("output").textContent = JSON.stringify(result, null, 2);
 
-    if (result.jwt) {
-      try {
-        const deviceResponse = await fetch(`https://${ip}/api/urdevices?limit=10&offset=0&organizationID=1&applicationID=0`, {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${result.jwt}`,
-            "Content-Type": "application/json"
-          }
-        });
-
-        if (!deviceResponse.ok) {
-          throw new Error(`デバイス取得エラー: HTTP ${deviceResponse.status}`);
-        }
-
-        const deviceData = await deviceResponse.json();
-        document.getElementById("output").textContent += `\n\n` + JSON.stringify(deviceData, null, 2);
-      } catch (err) {
-        document.getElementById("output").textContent += `\n\nデバイス取得エラー: ${err.message}`;
+    // クッキーで認証される前提で、JWTが不要な場合はこちらを使用
+    const deviceResponse = await fetch(`https://${ip}/api/urdevices?limit=10&offset=0&organizationID=1&applicationID=0`, {
+      method: "GET",
+      credentials: "include", // ← こちらにも必要
+      headers: {
+        "Content-Type": "application/json"
       }
-    } else {
-      throw new Error("JWTが取得できませんでした");
+    });
+
+    if (!deviceResponse.ok) {
+      throw new Error(`デバイス取得エラー: HTTP ${deviceResponse.status}`);
     }
+
+    const deviceData = await deviceResponse.json();
+    document.getElementById("output").textContent += `\n\n` + JSON.stringify(deviceData, null, 2);
 
   } catch (error) {
     document.getElementById("output").textContent = "ログインエラー: " + error.message;

@@ -21,7 +21,6 @@ async function login() {
     const result = await response.json();
     document.getElementById("output").textContent = JSON.stringify(result, null, 2);
 
-    // ✅ ログイン成功後にデバイス一覧を取得
     if (result.jwt) {
       try {
         const deviceResponse = await fetch(`https://${ip}/api/urdevices?limit=10&offset=0&organizationID=1&applicationID=0`, {

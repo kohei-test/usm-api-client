@@ -3,7 +3,7 @@ async function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  const url = `http://${ip}/api/internal/login`;
+  const url = `https://${ip}/api/internal/login`;
   const data = {
     username: username,
     password: password
@@ -27,7 +27,7 @@ async function login() {
     document.getElementById("output").textContent = JSON.stringify(result, null, 2);
 
     // クッキーで認証される前提で、JWTが不要な場合はこちらを使用
-    const deviceResponse = await fetch(`http://${ip}/api/urdevices?limit=10&offset=0&organizationID=1&applicationID=0`, {
+    const deviceResponse = await fetch(`https://${ip}/api/urdevices?limit=10&offset=0&organizationID=1&applicationID=0`, {
       method: "GET",
       credentials: "include", // ← こちらにも必要
       headers: {

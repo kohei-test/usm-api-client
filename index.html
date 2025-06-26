@@ -1,17 +1,59 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>UG-65 API Client</title>
+
+<title>demo</title>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
-  <h1>UG-65 ログインテスト</h1>
-  <label>IPアドレス: <input type="text" id="ip" value="192.168.23.150"></label><br>
-  <label>ユーザー名: <input type="text" id="username" value="admin"></label><br>
-  <label>パスワード: <input type="password" id="password" value="sI/7ewBCeWunDs6JXXtSHg=="></label><br>
-  <button onclick="login()">ログイン</button>
-  <pre id="output"></pre>
+<!-- Start your code here -->
+Server IP Address
+<input id="sv-ip-address" value="192.168.23.150" size="30"> 192.168.23.150 / 10.200.146.102 / 10.200.146.103<br>
 
-  <script src="script.js"></script>
+<p class="lw">ログイン</p>
+<input id="button1" type="button" value="ログイン" onclick="login()">
+<p class="lw">jwt</p>
+<input id="jwt-text" value="" size="100"><br>
+<!-- input id="loginname-text" value="" size="100"><br -->
+<input id="td-text" value="" size="100"><br>
+<br>
+
+<input id="chg-user-text" value="admin" size="30"><br>
+<input id="old-password-text" value="sI/7ewBCeWunDs6JXXtSHg==" size="30">  fic1234( A0NA3z1Qp42lhXGuHriPeA== ): password (5fdcNC53tm5j9edmEM8bag==)<br>
+<input id="new-password-text" value="" size="30">  fic54321( g4AoN+7YVRChnMLqIVQPOQ== ) <br>
+
+<input id="button2" type="button" value="パスワード変更" onclick="chgPassword()"><br>
+<div id="chgpass-data">nodata</div>
+
+<br>
+<input id="app-text" value="" size="100"><br>
+<input id="app-discription-text" value="" size="100"><br>
+<input id="button3-add" type="button" value="アプリケーション登録" onclick="setApps()">
+
+<input id="button3" type="button" value="アプリケーション取得" onclick="getApps()">
+<div id="app-data">nodata</div>
+<br>
+
+<input id="mqtt-app-id" value="" size="100"><br>
+<input id="mqtt-client-id" value="" size="100"><br>
+<input id="button4-add" type="button" value="MQTT登録" onclick="setMQTT()">
+<input id="button4" type="button" value="MQTT取得" onclick="getMQTT()">
+<div id="mqtt-data">nodata</div>
+<br>
+<input id="button5" type="button" value="ネットワーク取得" onclick="getNetwork()">
+<div id="network-data">nodata</div>
+<br>
+<input id="button6-1" type="button" value="GW取得" onclick="getWgInfo()">
+<div id="gw-info-data">nodata</div>
+<input id="button6-2" type="button" value="GW取得2" onclick="getWgInfo2()">
+<div id="gw-info-data2">nodata</div>
+<input id="button6-3" type="button" value="Device取得" onclick="getDeviceInfo()">
+<div id="device-info-data">nodata</div>
+
+<input id="button7-1" type="button" value="PayloadCodec取得" onclick="getPayloadCodecs()">
+<div id="payloadcodecs-data">nodata</div>
+
 </body>
 </html>
+<!-- End your code here -->
